@@ -1,6 +1,6 @@
-# 👟 Shoe Shopping App
+# 👟 Sneakers App
 
-A **Flutter-powered** shoe shopping app with a sleek and modern UI. Browse, select, and purchase your favorite shoes with an interactive shopping experience.
+A **Flutter-powered** sneakers shopping app with a sleek and modern UI. Browse, select, and purchase your favorite sneakers with an interactive shopping experience.
 
 ## 🚀 Features:
 - 🏆 **New Collection & Categories**
@@ -10,7 +10,7 @@ A **Flutter-powered** shoe shopping app with a sleek and modern UI. Browse, sele
 - ⚡ **Responsive & Animated UI**
 
 ## 📷 App Preview:
-![Shoe App UI](https://github.com/Vicky2505/Shoe_Store_App/blob/main/images/shoe_app_ui.png?raw=true)
+![Sneakers App UI](https://github.com/Vicky2505/Shoe_Store_App/blob/main/images/app_preview.png)
 
 ## 📥 Installation & Setup
 Follow these steps to get started:
