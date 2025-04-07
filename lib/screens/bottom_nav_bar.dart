@@ -30,10 +30,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: _pages.isNotEmpty ? _pages[_selectedIndex] : Container(),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFFEFFFFE),
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.grey,
@@ -62,8 +61,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 _buildIcon(Icons.shopping_bag_outlined, 3),
                 if (_selectedIndex != 3)
                   Positioned(
-                    bottom: 36,
-                    right: 6,
+                    bottom: 34,
+                    right: 8,
                     child: Container(
                       width: 8,
                       height: 8,
@@ -96,7 +95,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         icon,
         // ignore: deprecated_member_use
         color: isSelected ? Colors.white : Colors.black.withOpacity(0.5),
-        size: 30,
+        size: 26,
       ),
     );
   }
