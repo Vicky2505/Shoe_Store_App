@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Image.asset(
                             'images/home_assets/nike_logo.png',
                             height: 46.h,
-                            width: 46.w,
+                            width: 50.w,
                             fit: BoxFit.cover,
                           ),
                           CircleAvatar(
@@ -224,6 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // Widget to build the shoe card
   Widget _buildShoeCard({
     required Color color1,
     required Color color2,
