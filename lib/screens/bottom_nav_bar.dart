@@ -62,8 +62,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 _buildIcon(Icons.shopping_bag_outlined, 3),
                 if (_selectedIndex != 3)
                   Positioned(
-                    bottom: 34.h,
-                    right: 8.w,
+                    bottom: 30.h,
+                    right: 10.w,
                     child: Container(
                       width: 8.w,
                       height: 8.w,
