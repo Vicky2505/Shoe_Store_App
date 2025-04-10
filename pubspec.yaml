@@ -65,10 +65,13 @@ flutter:
   #home screen images
     - images/home_assets/default_profile.png
     - images/home_assets/nike_logo.png
+    - images/home_assets/shopping_bag_add_icon.png
   #shoe detail screen images
     - images/shoe_detail_assets/nike_shoes_sneakers.png
     - images/shoe_detail_assets/nike_kyrie_1_letterman.png
     - images/shoe_detail_assets/nike_free_5.0_orange_blue.png
+    - images/shoe_detail_assets/nike_text.png
+    - images/shoe_detail_assets/nike_text2.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

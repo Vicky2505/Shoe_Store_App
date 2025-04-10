@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sneakers/screens/shoe_detail_screen/shoe_detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -236,91 +237,104 @@ class _HomeScreenState extends State<HomeScreen> {
     required Color CircleColor,
   }) {
     return Expanded(
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Container(
-            height: 190.h,
-            width: double.infinity,
-            padding: EdgeInsets.all(12.r),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [color1, color2],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ShoeDetailScreen()),
+          );
+        },
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Container(
+              height: 190.h,
+              width: double.infinity,
+              padding: EdgeInsets.all(12.r),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [color1, color2],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+                borderRadius: BorderRadius.circular(20.r),
+                boxShadow: [
+                  BoxShadow(
+                    // ignore: deprecated_member_use
+                    color: Colors.black.withOpacity(0.20),
+                    blurRadius: 25,
+                    spreadRadius: 1,
+                    offset: Offset(0, 8),
+                  ),
+                ],
               ),
-              borderRadius: BorderRadius.circular(20.r),
-              boxShadow: [
-                BoxShadow(
-                  // ignore: deprecated_member_use
-                  color: Colors.black.withOpacity(0.20),
-                  blurRadius: 25,
-                  spreadRadius: 1,
-                  offset: Offset(0, 8),
-                ),
-              ],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 135),
+                  Text(
+                    title,
+                    style: GoogleFonts.poppins(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Text(
+                    subtitle,
+                    style: GoogleFonts.poppins(
+                      fontSize: 14.sp,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  SizedBox(height: 6.h),
+                  Text(
+                    price,
+                    style: GoogleFonts.poppins(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 135),
-                Text(
-                  title,
-                  style: GoogleFonts.poppins(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ),
-                ),
-                Text(
-                  subtitle,
-                  style: GoogleFonts.poppins(
-                    fontSize: 14.sp,
-                    color: Colors.black87,
-                  ),
-                ),
-                SizedBox(height: 6.h),
-                Text(
-                  price,
-                  style: GoogleFonts.poppins(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
+            Positioned(
+              top: -50.h,
+              left: 10.w,
+              right: 10.w,
+              child: Image.asset(imagePath, height: 175.h, fit: BoxFit.contain),
             ),
-          ),
-          Positioned(
-            top: -50.h,
-            left: 10.w,
-            right: 10.w,
-            child: Image.asset(imagePath, height: 175.h, fit: BoxFit.contain),
-          ),
-          Positioned(
-            bottom: 15.h,
-            right: 12.w,
-            child: Column(
-              children: [
-                CircleAvatar(
-                  radius: 14.r,
-                  backgroundColor: CircleColor,
-                  child: Icon(
-                    Icons.favorite_border,
-                    size: 16.sp,
-                    color: favColor,
+            Positioned(
+              bottom: 15.h,
+              right: 12.w,
+              child: Column(
+                children: [
+                  CircleAvatar(
+                    radius: 14.r,
+                    backgroundColor: CircleColor,
+                    child: Icon(
+                      Icons.favorite_border,
+                      size: 16.sp,
+                      color: favColor,
+                    ),
                   ),
-                ),
-                SizedBox(height: 12.h),
-                CircleAvatar(
-                  radius: 14.r,
-                  backgroundColor: Colors.black,
-                  child: Icon(Icons.add_card, size: 16.sp, color: Colors.white),
-                ),
-              ],
+                  SizedBox(height: 12.h),
+                  CircleAvatar(
+                    radius: 14.r,
+                    backgroundColor: Colors.black,
+                    child: Image.asset(
+                      "images/home_assets/shopping_bag_add_icon.png",
+                      height: 13.h,
+                      width: 13.w,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
