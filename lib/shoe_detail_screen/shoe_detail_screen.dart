@@ -9,18 +9,53 @@ class ShoeDetailScreen extends StatefulWidget {
 }
 
 class _ShoeDetailScreenState extends State<ShoeDetailScreen> {
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
   int _selectedSizeIndex = 2;
   int selectedColorIndex = 0;
-
   final List<double> sizes = [38.5, 40.5, 41.5, 42.5];
   final List<Color> colors = [Colors.blue, Colors.redAccent, Colors.yellow];
 
+  final List<List<Color>> backgroundGradients = [
+    [Color(0xFF5EFC8D), Color(0xFF61FC5F)],
+    [Color(0xFF90CAF9), Color(0xFF5ED6FC)],
+    [Color(0xFFF9BC90), Color(0xFFF9BC90)],
+  ];
+
+  final List<List<Color>> buttonColors = [
+    [Color(0xFF61FC5F)],
+    [Color(0xFF5ED6FC)],
+    [Color(0xFFF9BC90)],
+  ];
+
+  final List<Map<String, String>> shoes = [
+    {
+      'title': 'Nike Shoes Sneakers',
+      'text': 'images/shoe_detail_assets/nike_text.png',
+      'shoe': 'images/shoe_detail_assets/nike_shoes_sneakers.png',
+      'price': '\$ 189.99',
+    },
+    {
+      'title': 'Nike Kyrie 1 Letterman',
+      'text': 'images/shoe_detail_assets/nike_text.png',
+      'shoe': 'images/shoe_detail_assets/nike_kyrie_1_letterman.png',
+      'price': '\$ 160.99',
+    },
+    {
+      'title': 'Nike free 5.0 orange blue',
+      'text': 'images/shoe_detail_assets/nike_text2.png',
+      'shoe': 'images/shoe_detail_assets/nike_free_5.0_orange_blue.png',
+      'price': '\$ 67.95',
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 500),
+      decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xFF5EFC8D), Color(0xFF61FC5F)],
+          colors: backgroundGradients[_currentPage],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
@@ -65,8 +100,8 @@ class _ShoeDetailScreenState extends State<ShoeDetailScreen> {
                   Container(
                     margin: EdgeInsets.only(right: 8.w),
                     padding: EdgeInsets.all(11.r),
-                    decoration: const BoxDecoration(
-                      color: Color(0xFF61FC5F),
+                    decoration: BoxDecoration(
+                      color: buttonColors[_currentPage][0],
                       shape: BoxShape.circle,
                     ),
                     child: Image.asset(
@@ -94,9 +129,9 @@ class _ShoeDetailScreenState extends State<ShoeDetailScreen> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: _circularIcon(Icons.arrow_back_ios_new_rounded),
+                      child: _boxIcon(Icons.arrow_back_ios_new_rounded),
                     ),
-                    _circularIcon(Icons.favorite),
+                    _boxIcon(Icons.favorite),
                   ],
                 ),
                 SizedBox(height: 15.h),
@@ -104,7 +139,7 @@ class _ShoeDetailScreenState extends State<ShoeDetailScreen> {
                   child: Column(
                     children: [
                       Text(
-                        'Nike Shoes Sneakers',
+                        shoes[_currentPage]['title'] ?? '',
                         style: TextStyle(
                           fontSize: 22.sp,
                           fontWeight: FontWeight.w800,
@@ -125,27 +160,58 @@ class _ShoeDetailScreenState extends State<ShoeDetailScreen> {
                   ),
                 ),
                 SizedBox(height: 10.h),
-                SizedBox(
-                  height: 250.h,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Center(
-                        child: Image.asset(
-                          'images/shoe_detail_assets/nike_text.png',
-                          height: 260.h,
-                          fit: BoxFit.contain,
-                        ),
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Center(
+                      child: Image.asset(
+                        shoes[_currentPage]['text']!,
+                        height: 260.h,
+                        fit: BoxFit.contain,
                       ),
-                      Center(
-                        child: Image.asset(
-                          'images/shoe_detail_assets/nike_shoes_sneakers.png',
-                          height: 225.h,
-                          fit: BoxFit.contain,
-                        ),
+                    ),
+                    SizedBox(
+                      height: 250.h,
+                      child: PageView.builder(
+                        controller: _pageController,
+                        itemCount: shoes.length,
+                        onPageChanged: (index) {
+                          setState(() {
+                            _currentPage = index;
+                          });
+                        },
+                        itemBuilder: (context, index) {
+                          return AnimatedBuilder(
+                            animation: _pageController,
+                            builder: (context, child) {
+                              double value = 0.0;
+                              if (_pageController.position.haveDimensions) {
+                                value = _pageController.page! - index;
+                                value = value.clamp(-1, 1);
+                              }
+
+                              double scale = 1 - (value.abs() * 0.2);
+                              double angle = value * 0.3;
+
+                              return Transform(
+                                alignment: Alignment.center,
+                                transform:
+                                    Matrix4.identity()
+                                      ..setEntry(3, 2, 0.001)
+                                      ..rotateY(angle)
+                                      ..scale(scale),
+                                child: Image.asset(
+                                  shoes[index]['shoe']!,
+                                  height: 225.h,
+                                  fit: BoxFit.contain,
+                                ),
+                              );
+                            },
+                          );
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 24.h),
                 Padding(
@@ -168,7 +234,7 @@ class _ShoeDetailScreenState extends State<ShoeDetailScreen> {
                           ),
                           SizedBox(height: 6.h),
                           Text(
-                            '\$189.99',
+                            shoes[_currentPage]['price'] ?? '',
                             style: TextStyle(
                               fontSize: 24.sp,
                               fontWeight: FontWeight.w600,
@@ -277,8 +343,8 @@ class _ShoeDetailScreenState extends State<ShoeDetailScreen> {
     );
   }
 
-  /// Widget to create a circular icon with a border
-  Widget _circularIcon(IconData iconData) {
+  // widget to create a box with an icon inside
+  Widget _boxIcon(IconData iconData) {
     return Container(
       width: 42.w,
       height: 45.w,
