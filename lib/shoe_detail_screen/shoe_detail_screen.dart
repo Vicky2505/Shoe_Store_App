@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sneakers/cart_screen/cart_screen.dart';
 
 class ShoeDetailScreen extends StatefulWidget {
   const ShoeDetailScreen({super.key});
@@ -10,10 +11,13 @@ class ShoeDetailScreen extends StatefulWidget {
 
 class _ShoeDetailScreenState extends State<ShoeDetailScreen> {
   final PageController _pageController = PageController();
+
   int _currentPage = 0;
   int _selectedSizeIndex = 2;
-  int selectedColorIndex = 0;
+  int _selectedColorIndex = 0;
+
   final List<double> sizes = [38.5, 40.5, 41.5, 42.5];
+  final List<String> colorNames = ['Blue', 'Red', 'Yellow'];
   final List<Color> colors = [Colors.blue, Colors.redAccent, Colors.yellow];
 
   final List<List<Color>> backgroundGradients = [
@@ -30,20 +34,20 @@ class _ShoeDetailScreenState extends State<ShoeDetailScreen> {
 
   final List<Map<String, String>> shoes = [
     {
-      'title': 'Nike Shoes Sneakers',
-      'text': 'images/shoe_detail_assets/nike_text.png',
+      'shoename': 'Nike Shoes Sneakers',
+      'niketext': 'images/shoe_detail_assets/nike_text.png',
       'shoe': 'images/shoe_detail_assets/nike_shoes_sneakers.png',
       'price': '\$ 189.99',
     },
     {
-      'title': 'Nike Kyrie 1 Letterman',
-      'text': 'images/shoe_detail_assets/nike_text.png',
+      'shoename': 'Nike Kyrie 1 Letterman',
+      'niketext': 'images/shoe_detail_assets/nike_text.png',
       'shoe': 'images/shoe_detail_assets/nike_kyrie_1_letterman.png',
       'price': '\$ 160.99',
     },
     {
-      'title': 'Nike free 5.0 orange blue',
-      'text': 'images/shoe_detail_assets/nike_text2.png',
+      'shoename': 'Nike free 5.0 orange blue',
+      'niketext': 'images/shoe_detail_assets/nike_text2.png',
       'shoe': 'images/shoe_detail_assets/nike_free_5.0_orange_blue.png',
       'price': '\$ 67.95',
     },
@@ -71,47 +75,66 @@ class _ShoeDetailScreenState extends State<ShoeDetailScreen> {
           ),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Container(
-              height: 55.h,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(50.r),
-                boxShadow: [
-                  BoxShadow(
-                    // ignore: deprecated_member_use
-                    color: Colors.black.withOpacity(0.2),
-                    blurRadius: 6,
-                    offset: Offset(0, 4),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (context) => CartScreen(
+                          selectedShoe: {
+                            'image': shoes[_currentPage]['shoe']!,
+                            'name': shoes[_currentPage]['shoename']!,
+                            'size': sizes[_selectedSizeIndex].toString(),
+                            'color': colorNames[_selectedColorIndex],
+                            'price': shoes[_currentPage]['price']!,
+                          },
+                        ),
                   ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  SizedBox(width: 34.w),
-                  Text(
-                    'Add to cart',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18.sp,
-                      color: const Color(0xFFD9F7E6),
+                );
+              },
+              child: Container(
+                height: 55.h,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(50.r),
+                  boxShadow: [
+                    BoxShadow(
+                      // ignore: deprecated_member_use
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 6,
+                      offset: Offset(0, 4),
                     ),
-                  ),
-                  Spacer(),
-                  Container(
-                    margin: EdgeInsets.only(right: 8.w),
-                    padding: EdgeInsets.all(11.r),
-                    decoration: BoxDecoration(
-                      color: buttonColors[_currentPage][0],
-                      shape: BoxShape.circle,
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(width: 34.w),
+                    Text(
+                      'Add to cart',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18.sp,
+                        color: const Color(0xFFD9F7E6),
+                      ),
                     ),
-                    child: Image.asset(
-                      "images/home_assets/shopping_bag_add_icon.png",
-                      height: 28.h,
-                      width: 28.w,
-                      color: Colors.black,
+                    Spacer(),
+                    Container(
+                      margin: EdgeInsets.only(right: 8.w),
+                      padding: EdgeInsets.all(11.r),
+                      decoration: BoxDecoration(
+                        color: buttonColors[_currentPage][0],
+                        shape: BoxShape.circle,
+                      ),
+                      child: Image.asset(
+                        "images/home_assets/shopping_bag_add_icon.png",
+                        height: 28.h,
+                        width: 28.w,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -139,7 +162,7 @@ class _ShoeDetailScreenState extends State<ShoeDetailScreen> {
                   child: Column(
                     children: [
                       Text(
-                        shoes[_currentPage]['title'] ?? '',
+                        shoes[_currentPage]['shoename'] ?? '',
                         style: TextStyle(
                           fontSize: 22.sp,
                           fontWeight: FontWeight.w800,
@@ -165,7 +188,7 @@ class _ShoeDetailScreenState extends State<ShoeDetailScreen> {
                   children: [
                     Center(
                       child: Image.asset(
-                        shoes[_currentPage]['text']!,
+                        shoes[_currentPage]['niketext']!,
                         height: 260.h,
                         fit: BoxFit.contain,
                       ),
@@ -264,7 +287,7 @@ class _ShoeDetailScreenState extends State<ShoeDetailScreen> {
                                 child: GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      selectedColorIndex = index;
+                                      _selectedColorIndex = index;
                                     });
                                   },
                                   child: Container(
@@ -273,7 +296,7 @@ class _ShoeDetailScreenState extends State<ShoeDetailScreen> {
                                       shape: BoxShape.circle,
                                       border: Border.all(
                                         color:
-                                            selectedColorIndex == index
+                                            _selectedColorIndex == index
                                                 ? Colors.white
                                                 : Colors.transparent,
                                         width: 2.5,
