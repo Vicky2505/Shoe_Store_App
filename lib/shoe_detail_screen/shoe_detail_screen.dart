@@ -366,7 +366,7 @@ class _ShoeDetailScreenState extends State<ShoeDetailScreen> {
     );
   }
 
-  // widget to create a box with an icon inside
+  // boxIcon widget
   Widget _boxIcon(IconData iconData) {
     return Container(
       width: 42.w,
