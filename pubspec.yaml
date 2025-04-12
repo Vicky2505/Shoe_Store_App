@@ -72,7 +72,7 @@ flutter:
     - images/shoe_detail_assets/nike_free_5.0_orange_blue.png
     - images/shoe_detail_assets/nike_text.png
     - images/shoe_detail_assets/nike_text2.png
-
+    - images/shoe_detail_assets/nike_text3.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
