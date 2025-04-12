@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sneakers/shoe_detail_screen/shoe_detail_screen.dart';
 
 class CartScreen extends StatefulWidget {
   final Map<String, String> selectedShoe;
@@ -331,7 +332,12 @@ class _CartScreenState extends State<CartScreen> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ShoeDetailScreen(),
+                          ),
+                        );
                       },
                       child: _boxIcon(Icons.arrow_back_ios_new_rounded),
                     ),

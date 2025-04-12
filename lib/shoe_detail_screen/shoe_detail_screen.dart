@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sneakers/cart_screen/cart_screen.dart';
+import 'package:swipeable_button_view/swipeable_button_view.dart';
 
 class ShoeDetailScreen extends StatefulWidget {
   const ShoeDetailScreen({super.key});
@@ -15,6 +16,7 @@ class _ShoeDetailScreenState extends State<ShoeDetailScreen> {
   int _currentPage = 0;
   int _selectedSizeIndex = 2;
   int _selectedColorIndex = 0;
+  bool isFinished = false;
 
   final List<double> sizes = [38.5, 40.5, 41.5, 42.5];
   final List<String> colorNames = ['Blue', 'Red', 'Yellow'];
@@ -75,65 +77,70 @@ class _ShoeDetailScreenState extends State<ShoeDetailScreen> {
           ),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:
-                        (context) => CartScreen(
-                          selectedShoe: {
-                            'image': shoes[_currentPage]['shoe']!,
-                            'name': shoes[_currentPage]['shoename']!,
-                            'size': sizes[_selectedSizeIndex].toString(),
-                            'color': colorNames[_selectedColorIndex],
-                            'price': shoes[_currentPage]['price']!,
-                          },
-                        ),
+            child: Container(
+              height: 45.h,
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(50.r),
+                boxShadow: [
+                  BoxShadow(
+                    // ignore: deprecated_member_use
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 6,
+                    offset: Offset(0, 4),
                   ),
-                );
-              },
-              child: Container(
-                height: 55.h,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(50.r),
-                  boxShadow: [
-                    BoxShadow(
-                      // ignore: deprecated_member_use
-                      color: Colors.black.withOpacity(0.2),
-                      blurRadius: 6,
-                      offset: Offset(0, 4),
+                ],
+              ),
+              child: Center(
+                child: SwipeableButtonView(
+                  buttonText: 'Add to cart',
+                  buttontextstyle: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18.sp,
+                    color: const Color(0xFFD9F7E6),
+                  ),
+                  buttonWidget: Container(
+                    padding: EdgeInsets.all(11.r),
+                    decoration: BoxDecoration(
+                      color: buttonColors[_currentPage][0],
+                      shape: BoxShape.circle,
                     ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    SizedBox(width: 34.w),
-                    Text(
-                      'Add to cart',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18.sp,
-                        color: const Color(0xFFD9F7E6),
-                      ),
+                    child: Image.asset(
+                      "images/home_assets/shopping_bag_add_icon.png",
+                      height: 28.h,
+                      width: 28.w,
+                      color: Colors.black,
                     ),
-                    Spacer(),
-                    Container(
-                      margin: EdgeInsets.only(right: 8.w),
-                      padding: EdgeInsets.all(11.r),
-                      decoration: BoxDecoration(
-                        color: buttonColors[_currentPage][0],
-                        shape: BoxShape.circle,
+                  ),
+                  activeColor: Colors.black,
+                  isFinished: isFinished,
+                  onWaitingProcess: () {
+                    Future.delayed(Duration(milliseconds: 800), () {
+                      setState(() {
+                        isFinished = true;
+                      });
+                    });
+                  },
+                  onFinish: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder:
+                            (context) => CartScreen(
+                              selectedShoe: {
+                                'image': shoes[_currentPage]['shoe']!,
+                                'name': shoes[_currentPage]['shoename']!,
+                                'size': sizes[_selectedSizeIndex].toString(),
+                                'color': colorNames[_selectedColorIndex],
+                                'price': shoes[_currentPage]['price']!,
+                              },
+                            ),
                       ),
-                      child: Image.asset(
-                        "images/home_assets/shopping_bag_add_icon.png",
-                        height: 28.h,
-                        width: 28.w,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
+                    );
+                    setState(() {
+                      isFinished = false;
+                    });
+                  },
                 ),
               ),
             ),

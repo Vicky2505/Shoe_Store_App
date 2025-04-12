@@ -12,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int selectedCategoryIndex = 0;
+  int selectedCategoryIndex = 1;
 
   List<String> categories = ["All", "Running", "Lifestyle", "Sports"];
 
