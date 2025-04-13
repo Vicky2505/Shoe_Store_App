@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sneakers/shoe_detail_screen/shoe_detail_screen.dart';
+import 'package:lottie/lottie.dart';
 
 class CartScreen extends StatefulWidget {
   final Map<String, String> selectedShoe;
@@ -161,11 +161,13 @@ class _CartScreenState extends State<CartScreen> {
                                   elevation: 8,
                                   title: Row(
                                     children: [
-                                      Icon(
-                                        Icons.delete_outline,
-                                        color: Colors.red,
-                                        size: 30.sp,
+                                      Lottie.asset(
+                                        'images/card_assets/remove_cart.json',
+                                        width: 90,
+                                        height: 120,
+                                        fit: BoxFit.cover,
                                       ),
+                                      SizedBox(width: 8),
                                       Text(
                                         'Remove Item',
                                         style: TextStyle(
@@ -332,12 +334,7 @@ class _CartScreenState extends State<CartScreen> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ShoeDetailScreen(),
-                          ),
-                        );
+                        Navigator.pop(context);
                       },
                       child: _boxIcon(Icons.arrow_back_ios_new_rounded),
                     ),

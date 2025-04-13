@@ -122,6 +122,9 @@ class _ShoeDetailScreenState extends State<ShoeDetailScreen> {
                     });
                   },
                   onFinish: () async {
+                    setState(() {
+                      isFinished = false;
+                    });
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -137,9 +140,6 @@ class _ShoeDetailScreenState extends State<ShoeDetailScreen> {
                             ),
                       ),
                     );
-                    setState(() {
-                      isFinished = false;
-                    });
                   },
                 ),
               ),

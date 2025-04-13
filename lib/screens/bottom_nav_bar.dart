@@ -82,6 +82,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     );
   }
 
+  //widget for bottom navigation bar icon
   Widget _buildIcon(IconData icon, int index) {
     bool isSelected = _selectedIndex == index;
 

@@ -37,6 +37,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   google_fonts: ^6.2.1
   swipeable_button_view: ^0.0.2
+  lottie: ^3.3.1
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +75,8 @@ flutter:
     - images/shoe_detail_assets/nike_text.png
     - images/shoe_detail_assets/nike_text2.png
     - images/shoe_detail_assets/nike_text3.png
+  #cart screen images
+    - images/card_assets/remove_cart.json  
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
